@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # 1. Frontend Web App (Your existing image)
+  frontend:
+    image: hassan23rh/property-hub:latest
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  # 2. Backend API
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_HOST=postgres-db
+      - DB_USER=postgres
+      - DB_PASSWORD=secretpassword
+      - DB_NAME=propertyhub
+    depends_on:
+      - postgres-db
+
+  # 3. Database
+  postgres-db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secretpassword
+      POSTGRES_DB: propertyhub
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data: # Persists your database data when containers stop

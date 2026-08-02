@@ -9,6 +9,7 @@
 </head>
 <body>
 
+  <!-- Navigation Bar -->
   <header class="navbar">
     <div class="logo">Property<span>Hub</span></div>
     <nav>
@@ -18,31 +19,17 @@
     </nav>
   </header>
 
+  <!-- Main Container -->
   <main class="container">
     <section class="hero">
       <h1>Find Your Dream Property</h1>
       <p>Explore luxury homes, modern apartments, and prime estates.</p>
     </section>
 
-    <!-- Listings Grid -->
-    <section class="property-grid">
-      <div class="card" onclick="openProperty('Modern Villa', '$1,250,000', '4 Beds • 3 Baths • 3,200 sqft', 'Located in the heart of the coastal hills, this ultra-modern villa offers panoramic ocean views, an infinity pool, and high-end smart home integration.', 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80')">
-        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Villa">
-        <div class="card-info">
-          <span class="price">$1,250,000</span>
-          <h3>Modern Villa</h3>
-          <p>4 Beds • 3 Baths • 3,200 sqft</p>
-        </div>
-      </div>
-
-      <div class="card" onclick="openProperty('Downtown Penthouse', '$890,000', '2 Beds • 2 Baths • 1,800 sqft', 'Luxury penthouse with floor-to-ceiling glass, private rooftop terrace, and direct access to city hotspots.', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80')">
-        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Penthouse">
-        <div class="card-info">
-          <span class="price">$890,000</span>
-          <h3>Downtown Penthouse</h3>
-          <p>2 Beds • 2 Baths • 1,800 sqft</p>
-        </div>
-      </div>
+    <!-- Dynamic Property Listings Grid -->
+    <section class="property-grid" id="propertyContainer">
+      <!-- Loading placeholder while fetching from database -->
+      <p style="text-align: center; grid-column: 1 / -1; color: #94a3b8;">Loading properties from database...</p>
     </section>
   </main>
 
@@ -58,7 +45,7 @@
           <h2 id="modalTitle">Property Title</h2>
           <div class="modal-price" id="modalPrice">$0</div>
           <p class="specs" id="modalSpecs">Specs info</p>
-          <hr>
+          <hr style="border-color: #334155; margin: 1rem 0;">
           <p class="description" id="modalDesc">Detailed description goes here...</p>
           <button class="btn-primary">Schedule a Viewing</button>
         </div>
@@ -73,6 +60,60 @@
   </div>
 
   <script>
+    // 1. Fetch properties dynamically from backend API / database
+    async function fetchProperties() {
+      const container = document.getElementById('propertyContainer');
+      
+      try {
+        // Adjust the port/URL to match your backend API endpoint
+        const response = await fetch('http://localhost:5000/api/properties');
+        
+        if (!response.ok) {
+          throw new Error('Failed to load data');
+        }
+
+        const properties = await response.json();
+
+        if (properties.length === 0) {
+          container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">No properties found in database.</p>';
+          return;
+        }
+
+        // Render each property card into the HTML grid
+        container.innerHTML = properties.map(property => `
+          <div class="card" onclick="openProperty(
+            '${escapeQuotes(property.title)}', 
+            '${escapeQuotes(property.price)}', 
+            '${escapeQuotes(property.specs)}', 
+            '${escapeQuotes(property.description)}', 
+            '${escapeQuotes(property.image_url)}'
+          )">
+            <img src="${property.image_url}" alt="${property.title}">
+            <div class="card-info">
+              <span class="price">${property.price}</span>
+              <h3>${property.title}</h3>
+              <p>${property.specs}</p>
+            </div>
+          </div>
+        `).join('');
+
+      } catch (error) {
+        console.error('Error fetching properties:', error);
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; color: #f87171;">
+            <p>Could not connect to database API.</p>
+            <small>Make sure your backend API is running on port 5000.</small>
+          </div>
+        `;
+      }
+    }
+
+    // Helper function to safely escape quotes in dynamic text strings
+    function escapeQuotes(str) {
+      return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // 2. Open split-view modal with selected property data
     function openProperty(title, price, specs, desc, imgSrc) {
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalPrice').innerText = price;
@@ -82,9 +123,13 @@
       document.getElementById('propertyModal').style.display = 'flex';
     }
 
+    // 3. Close modal function
     function closeProperty() {
       document.getElementById('propertyModal').style.display = 'none';
     }
+
+    // Execute fetch on page load
+    fetchProperties();
   </script>
 </body>
 </html>
