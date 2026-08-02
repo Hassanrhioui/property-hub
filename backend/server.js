@@ -6,14 +6,13 @@ const app = express();
 app.use(cors());
 
 const pool = new Pool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: process.env.DB_HOST || 'postgres-db',
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'secretpassword',
+  database: process.env.DB_NAME || 'propertyhub',
   port: 5432,
 });
 
-// Endpoint to fetch properties
 app.get('/api/properties', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM properties');
@@ -23,4 +22,4 @@ app.get('/api/properties', async (req, res) => {
   }
 });
 
-app.listen(5000, () => console.log('Backend running on port 5000'));
+app.listen(5000, () => console.log('Backend listening on port 5000'));
