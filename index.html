@@ -3,88 +3,88 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Property Hub - Updated Live! | Modern Living</title>
+  <title>PropertyHub | Premium Real Estate</title>
   <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="#" class="logo">Property<span>Hub</span></a>
-      <ul class="nav-links">
-        <li><a href="#properties">Listings</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#contact" class="btn-nav">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
 
-  <header class="hero">
-    <div class="hero-content">
-      <span class="badge">Curated Spaces</span>
-      <h1>Architectural living spaces for modern life.</h1>
-      <p>Discover handpicked villas, penthouses, and minimal studios across major tech hubs.</p>
-    </div>
+  <header class="navbar">
+    <div class="logo">Property<span>Hub</span></div>
+    <nav>
+      <a href="#">Listings</a>
+      <a href="#">Agents</a>
+      <a href="#">Contact</a>
+    </nav>
   </header>
 
-  <main class="container" id="properties">
-    <div class="section-title">
-      <h2>Featured Properties</h2>
-      <p>Explore high-value residential architecture.</p>
-    </div>
+  <main class="container">
+    <section class="hero">
+      <h1>Find Your Dream Property</h1>
+      <p>Explore luxury homes, modern apartments, and prime estates.</p>
+    </section>
 
+    <!-- Listings Grid -->
     <section class="property-grid">
-      <!-- Property 1: Villa -->
-      <article class="card">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80" alt="Luxury Minimal Villa">
-          <span class="tag">Villa</span>
+      <div class="card" onclick="openProperty('Modern Villa', '$1,250,000', '4 Beds • 3 Baths • 3,200 sqft', 'Located in the heart of the coastal hills, this ultra-modern villa offers panoramic ocean views, an infinity pool, and high-end smart home integration.', 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80" alt="Villa">
+        <div class="card-info">
+          <span class="price">$1,250,000</span>
+          <h3>Modern Villa</h3>
+          <p>4 Beds • 3 Baths • 3,200 sqft</p>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="location">Malibu, CA</span>
-            <span class="specs">4 Beds · 5 Baths · 4,200 sqft</span>
-          </div>
-          <h3>The Horizon Glass Villa</h3>
-          <p class="price">$3,850,000</p>
-        </div>
-      </article>
+      </div>
 
-      <!-- Property 2: Penthouse -->
-      <article class="card">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=800&q=80" alt="Modern Minimal Penthouse">
-          <span class="tag">Penthouse</span>
+      <div class="card" onclick="openProperty('Downtown Penthouse', '$890,000', '2 Beds • 2 Baths • 1,800 sqft', 'Luxury penthouse with floor-to-ceiling glass, private rooftop terrace, and direct access to city hotspots.', 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80')">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80" alt="Penthouse">
+        <div class="card-info">
+          <span class="price">$890,000</span>
+          <h3>Downtown Penthouse</h3>
+          <p>2 Beds • 2 Baths • 1,800 sqft</p>
         </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="location">Brooklyn, NY</span>
-            <span class="specs">2 Beds · 2.5 Baths · 1,800 sqft</span>
-          </div>
-          <h3>Skyline Minimal Loft</h3>
-          <p class="price">$1,920,000</p>
-        </div>
-      </article>
-
-      <!-- Property 3: Studio -->
-      <article class="card">
-        <div class="card-image">
-          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Nordic Light Studio">
-          <span class="tag">Studio</span>
-        </div>
-        <div class="card-body">
-          <div class="card-meta">
-            <span class="location">Austin, TX</span>
-            <span class="specs">1 Bed · 1 Bath · 650 sqft</span>
-          </div>
-          <h3>Nordic Compact Studio</h3>
-          <p class="price">$420,000</p>
-        </div>
-      </article>
+      </div>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2026 PropertyHub. Designed with simplicity in mind.</p>
-  </footer>
+  <!-- Modern Split Modal View -->
+  <div id="propertyModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeProperty()">&times;</span>
+      
+      <div class="split-view">
+        <!-- LEFT SIDE: Info -->
+        <div class="info-side">
+          <span class="badge">Featured Property</span>
+          <h2 id="modalTitle">Property Title</h2>
+          <div class="modal-price" id="modalPrice">$0</div>
+          <p class="specs" id="modalSpecs">Specs info</p>
+          <hr>
+          <p class="description" id="modalDesc">Detailed description goes here...</p>
+          <button class="btn-primary">Schedule a Viewing</button>
+        </div>
+
+        <!-- RIGHT SIDE: Image -->
+        <div class="image-side">
+          <img id="modalImg" src="" alt="Property Detail">
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function openProperty(title, price, specs, desc, imgSrc) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalPrice').innerText = price;
+      document.getElementById('modalSpecs').innerText = specs;
+      document.getElementById('modalDesc').innerText = desc;
+      document.getElementById('modalImg').src = imgSrc;
+      document.getElementById('propertyModal').style.display = 'flex';
+    }
+
+    function closeProperty() {
+      document.getElementById('propertyModal').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
