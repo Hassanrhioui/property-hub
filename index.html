@@ -6,40 +6,166 @@
   <title>PropertyHub | Premium Real Estate</title>
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Section and UI Polish for Nav/Agents/Contact */
+    html {
+      scroll-behavior: smooth;
+    }
+    .logo {
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-title {
+      text-align: center;
+      margin: 4rem 0 2rem;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .agent-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+    .agent-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 3px solid #3b82f6;
+    }
+    .agent-card h3 {
+      margin-bottom: 0.25rem;
+    }
+    .agent-card p.role {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .agent-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+    }
+    .agent-contact a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+    .agent-contact a:hover {
+      text-decoration: underline;
+    }
+    .footer-contact {
+      background: #0f172a;
+      border-top: 1px solid #334155;
+      padding: 3rem 1rem;
+      margin-top: 4rem;
+    }
+    .footer-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .footer-section h4 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #f8fafc;
+    }
+    .footer-section p, .footer-section a {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-decoration: none;
+      display: block;
+    }
+    .footer-section a:hover {
+      color: #3b82f6;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navigation Bar -->
   <header class="navbar">
-    <div class="logo">Property<span>Hub</span></div>
+    <!-- Clickable Logo Returns Home -->
+    <div class="logo" onclick="goHome()">Property<span>Hub</span></div>
     <nav>
-      <a href="#">Listings</a>
-      <a href="#">Agents</a>
-      <a href="#">Contact</a>
+      <a href="#listings">Listings</a>
+      <a href="#agents">Agents</a>
+      <a href="#contact">Contact</a>
     </nav>
   </header>
 
   <!-- Main Container -->
   <main class="container">
-    <section class="hero">
+    <section class="hero" id="home">
       <h1>Find Your Dream Property</h1>
       <p>Explore luxury homes, modern apartments, and prime estates.</p>
     </section>
 
     <!-- Dynamic Property Listings Grid -->
-    <section class="property-grid" id="propertyContainer">
-      <!-- Loading placeholder while fetching from database -->
-      <p style="text-align: center; grid-column: 1 / -1; color: #94a3b8;">Loading properties from database...</p>
+    <section id="listings">
+      <h2 class="section-title">Featured Listings</h2>
+      <div class="property-grid" id="propertyContainer">
+        <p style="text-align: center; grid-column: 1 / -1; color: #94a3b8;">Loading properties from database...</p>
+      </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section id="agents">
+      <h2 class="section-title">Our Premier Agents</h2>
+      <div class="agents-grid">
+        
+        <div class="agent-card">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=300&q=80" alt="Sarah Jenkins">
+          <h3>Sarah Jenkins</h3>
+          <p class="role">Senior Luxury Specialist</p>
+          <div class="agent-contact">
+            <a href="mailto:sarah.j@propertyhub.com">📧 sarah.j@propertyhub.com</a>
+            <a href="tel:+15550192834">📞 +1 (555) 019-2834</a>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" alt="Marcus Vance">
+          <h3>Marcus Vance</h3>
+          <p class="role">Commercial & Urban Advisor</p>
+          <div class="agent-contact">
+            <a href="mailto:marcus.v@propertyhub.com">📧 marcus.v@propertyhub.com</a>
+            <a href="tel:+15550148291">📞 +1 (555) 014-8291</a>
+          </div>
+        </div>
+
+        <div class="agent-card">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=300&q=80" alt="Elena Rostova">
+          <h3>Elena Rostova</h3>
+          <p class="role">Residential Estates Agent</p>
+          <div class="agent-contact">
+            <a href="mailto:elena.r@propertyhub.com">📧 elena.r@propertyhub.com</a>
+            <a href="tel:+15550173920">📞 +1 (555) 017-3920</a>
+          </div>
+        </div>
+
+      </div>
     </section>
   </main>
 
-  <!-- Modern Split Modal View -->
+  <!-- Split Modal View -->
   <div id="propertyModal" class="modal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeProperty()">&times;</span>
       
       <div class="split-view">
-        <!-- LEFT SIDE: Info -->
         <div class="info-side">
           <span class="badge">Featured Property</span>
           <h2 id="modalTitle">Property Title</h2>
@@ -50,22 +176,49 @@
           <button class="btn-primary">Schedule a Viewing</button>
         </div>
 
-        <!-- RIGHT SIDE: Image -->
         <div class="image-side">
           <img id="modalImg" src="" alt="Property Detail">
         </div>
       </div>
-
     </div>
   </div>
 
+  <!-- Footer Contact Section -->
+  <footer class="footer-contact" id="contact">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>PropertyHub Inc.</h4>
+        <p>Connecting clients with extraordinary properties worldwide. Your trust is our foundation.</p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Get In Touch</h4>
+        <p><strong>Email:</strong> <a href="mailto:contact@propertyhub.com">contact@propertyhub.com</a></p>
+        <p><strong>Phone:</strong> <a href="tel:+18005557767">+1 (800) 555-PROPHUB</a></p>
+        <p><strong>Support:</strong> <a href="mailto:support@propertyhub.com">support@propertyhub.com</a></p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Headquarters</h4>
+        <p>100 Grand Avenue, Suite 400</p>
+        <p>Metropolis, NY 10001</p>
+        <p>Mon - Fri: 8:00 AM - 6:00 PM EST</p>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    // 1. Fetch properties dynamically from backend API / database
+    // 1. Return to Homepage Function
+    function goHome() {
+      closeProperty();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 2. Fetch properties dynamically from backend API / database
     async function fetchProperties() {
       const container = document.getElementById('propertyContainer');
       
       try {
-        // Adjust the port/URL to match your backend API endpoint
         const response = await fetch('http://localhost:5000/api/properties');
         
         if (!response.ok) {
@@ -79,7 +232,6 @@
           return;
         }
 
-        // Render each property card into the HTML grid
         container.innerHTML = properties.map(property => `
           <div class="card" onclick="openProperty(
             '${escapeQuotes(property.title)}', 
@@ -108,12 +260,11 @@
       }
     }
 
-    // Helper function to safely escape quotes in dynamic text strings
     function escapeQuotes(str) {
       return (str || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     }
 
-    // 2. Open split-view modal with selected property data
+    // 3. Open Modal View
     function openProperty(title, price, specs, desc, imgSrc) {
       document.getElementById('modalTitle').innerText = title;
       document.getElementById('modalPrice').innerText = price;
@@ -123,12 +274,11 @@
       document.getElementById('propertyModal').style.display = 'flex';
     }
 
-    // 3. Close modal function
+    // 4. Close Modal
     function closeProperty() {
       document.getElementById('propertyModal').style.display = 'none';
     }
 
-    // Execute fetch on page load
     fetchProperties();
   </script>
 </body>
